@@ -9,15 +9,60 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Resampling methods 
 
-### Lab
+### Lab: Cross-Validation and the Bootstrap
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+Using validation set approaches to estimate test error rates that result from fitting various linear models
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+In this case we will be taking 
 
-```{r cars}
-summary(cars)
+```{r validation}
+
+library(ISLR)
+set.seed(1)
+train <- sample(392,196)
+
+# 
+
+lm_fit <- lm(mpg~horsepower, data = Auto, subset = train)
+
+attach(Auto)
+
+# calculate the mse of the linear regression model
+# the -train parts we are using the data that was not in
+# the training model
+
+mean((mpg-predict(lm_fit, Auto))[-train]^2)
+
+# create quadratic and cubic regression models 
+
+# quadratic regression
+lm_fit2 <- lm(mpg~poly(horsepower, 2), data = Auto , subset = train)
+mean((mpg-predict(lm_fit2, Auto))[-train]^2)
+
+# cubic regression 
+lm_fit3 <- lm(mpg~poly(horsepower, 3), data = Auto , subset = train)
+mean((mpg-predict(lm_fit3, Auto))[-train]^2)
+
+
+# change the training set and we will change the errors on the 
+# validation set 
+
+set.seed(2)
+train <- sample(392, 196)
+
+lm_fit <- lm(mpg~horsepower, subset = train)
+mean((mpg-predict(lm_fit, Auto))[-train]^2)
+
+lm_fit2 <- lm(mpg~poly(horsepower, 2), data = Auto , subset = train)
+mean((mpg-predict(lm_fit2, Auto))[-train]^2)
+
+lm_fit3 <- lm(mpg~poly(horsepower, 3), data = Auto , subset = train)
+mean((mpg-predict(lm_fit3, Auto))[-train]^2)
+
 ```
+
+Leave-one-out
+
 
 ## Including Plots
 
