@@ -177,22 +177,146 @@ pre code {
 <ol style="list-style-type: lower-alpha">
 <li>What is the probability that the first bootstrap observation is <em>not</em> the <em>j</em>th observation from the original sample?</li>
 </ol>
-<pre><code>1 - 1/n </code></pre>
+<p>1 - 1/n</p>
 <ol start="2" style="list-style-type: lower-alpha">
 <li>What is the probability the second bootstrap observation is <em>not</em> the <em>j</em>th observation from the original sample?</li>
 </ol>
-<pre><code>probabilty is 1/n  as bootstrapping samples with replacement </code></pre>
+<p>probability is 1/n as bootstrapping samples with replacement</p>
 <ol start="3" style="list-style-type: lower-alpha">
 <li>Argue that the <em>j</em>th observation is <em>not</em> in the bootstrap sample</li>
 </ol>
-<pre><code>As bootstrapping samples with replacement each probability of *j*th not being in the bootstrapping sample is independent 
-
-(1 - 1/n)...(1 - 1/n) = (1 - 1/n)^n^</code></pre>
+<p>As bootstrapping samples with replacement each probability of <em>j</em>th not being in the bootstrapping sample is independent</p>
+<p>(1 - 1/n)…(1 - 1/n) = (1 - 1/n)<sup>n</sup></p>
 <ol start="4" style="list-style-type: lower-alpha">
-<li><p>When <em>n</em> = 5, what is the probability that the <em>j</em>th observation</p></li>
-<li><p>When n = 100, what is the probability that the <em>j</em>th observation is in the bootstrap sample?</p></li>
-<li><p>When n = 10,000, what is probability that the <em>j</em>th observation is in the bootstrap sample</p></li>
+<li>When <em>n</em> = 5, what is the probability that the <em>j</em>th observation is in the bootstrap sample?</li>
 </ol>
+<p>n = 5 1 - (1 - 1/5)<sup>5</sup> = 0.67232</p>
+<ol start="5" style="list-style-type: lower-alpha">
+<li>When n = 100, what is the probability that the <em>j</em>th observation is in the bootstrap sample?</li>
+</ol>
+<p>n = 100 1 - (1 - 1/100)^100 = 0.6339677</p>
+<ol start="6" style="list-style-type: lower-alpha">
+<li>When n = 10,000, what is probability that the <em>j</em>th observation is in the bootstrap sample</li>
+</ol>
+<p>n = 10000 1 - (1 - 1/10000)^10000 = 0.632139</p>
+<ol start="7" style="list-style-type: lower-alpha">
+<li>Create a plot that displays , for each integer value of <em>n</em> from 1 to 100,000, the probability that the <em>j</em>th observation is in the bootstrap sample. Comment on what you observe?</li>
+</ol>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABUAAAAPACAMAAADDuCPrAAAAtFBMVEUAAAAAADoAAGYAOjoAOmYAOpAAZrY6AAA6OgA6Ojo6OmY6ZpA6ZrY6kNtmAABmOgBmOjpmZjpmZmZmZpBmkJBmkLZmkNtmtttmtv+QOgCQZjqQZmaQkDqQkLaQtraQttuQtv+Q2/+2ZgC2Zjq2kGa2tpC2tra2ttu229u22/+2///bkDrbkGbbtmbbtpDbtrbb25Db27bb29vb2//b////tmb/25D/27b/29v//7b//9v///99BAHRAAAACXBIWXMAAB2HAAAdhwGP5fFlAAAed0lEQVR4nO3d63pbVbauURkCBkKSKq+dRZJaGzYhmIALWEnhHKz7v689p+SDYgfHs/dhaw711n5UgZ4vQoOYN5J18GIJQMhi2zcAoFcCChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQfMO6AKgmfaJan6NDW373zawW5o3qvUVXnby+s/Dw8NfXv8V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" width="672" /></p>
+<p>The probability that <em>j</em>th is sampled reaches towards zero. Becomes asymptote at 0.63</p>
+<ol start="8" style="list-style-type: lower-alpha">
+<li>We will now investigate numerically the probability that a bootstrap sample of size = 100 contains the <em>j</em>th observation? Here <em>j</em> = 4. Repeatedly create bootstap samples, and each time we record whether or not the fourth observation is contained in the bootstrap sample.</li>
+</ol>
+<pre class="r"><code>store = rep(NA, 10000)
+for(i in 1:100000){
+  store[i] = sum(sample(1:100, rep = TRUE) == 4) &gt; 0 
+}
+
+mean(store)</code></pre>
+<pre><code>## [1] 0.63565</code></pre>
+<p>Confirms the previous formula</p>
+<p>3.Reviewing the k-fold cross-validation</p>
+<ol style="list-style-type: lower-alpha">
+<li>Explain how k-fold cross-validation is implemented.</li>
+</ol>
+<p>Randomly divide the observations into <em>k</em> groups. Select one group as the testing set and the other groups as the training set. Calculate MSE from the observations in the testing set. Repeat process <em>k</em> times, each time using using a different group as the testing set. Average the MSE values from the <em>k</em> estimates.</p>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>What are the advantages and disadvantages of using <em>k</em>-fold cross-validation.</li>
+</ol>
+<ol style="list-style-type: lower-roman">
+<li>The validation set approach</li>
+</ol>
+<p>The validation set approach uses a smaller subset of the observations the cross-validation so will likely overestimate the test error and highly variable depending on which observations used in the training set. Less computationally expensive then k-fold.</p>
+<ol start="2" style="list-style-type: lower-roman">
+<li>LOOCV</li>
+</ol>
+<p>LOOCV is more computationally expensive unless fitting a model using linear or polynomial expression. LOOCV produces models with generally smaller error bias but often with a higher variance error and overall testing error.</p>
+<ol start="4" style="list-style-type: decimal">
+<li>Suppose that we use some statistical learning method to make a prediction for the response <em>Y</em> for a particular value of the predictor <em>X</em>. Carefully describe the how we might estimate the standard deviation of out prediction?</li>
+</ol>
+<p>Estimate the standard deviation of the prediction using bootstrap. Create a function that samples data with replacement before using the data to train the statistical learning method then using the trained model to predict a value from Y from X, returning Y. Place the function into a bootstrap and repeat each time with a different subset of data being used to train the model and each time getting return on a prediction of Y from X. From the distributions of different Y predictions calculate the standard error.</p>
+</div>
+<div id="applied-excercises" class="section level2">
+<h2>Applied Excercises</h2>
+<ol start="5" style="list-style-type: decimal">
+<li></li>
+</ol>
+<ol style="list-style-type: lower-alpha">
+<li><p>Fit a logistic regression model that uses income and balance to predict default</p></li>
+<li><p>Use the validation set approach, estimate the test error of this model.</p></li>
+<li><p>Repeat the process three times using three different splits of the obervations into atraining set and a validation set. Comment on the results obtained.</p></li>
+</ol>
+<pre class="r"><code>library(ISLR)
+library(boot)
+
+data(&quot;Default&quot;)
+
+
+# create logistic model for default using balance and income using training
+# set
+
+
+seed_vector &lt;- c(1,2,3)
+
+for(i in seed_vector){
+  
+  set.seed(i)
+  train &lt;- sample(10000, 5000)
+  glm_default  &lt;-glm(default ~ balance + income,
+                   family = &quot;binomial&quot;, 
+                   data = Default,
+                   subset = train) 
+
+# create predictions on the testing set
+
+  test_res &lt;- predict(object = glm_default, 
+        newdata =  Default[-train,], 
+        type = &quot;response&quot;)
+
+  test_res &lt;- ifelse(test_res &gt;= 0.5,&quot;Yes&quot;, &quot;No&quot;)
+  test_correct &lt;- ifelse(test_res == Default$default[-train], TRUE, FALSE)
+  print(1 - sum(test_correct) / length(test_correct))
+  
+  
+  
+}</code></pre>
+<pre><code>## [1] 0.0254
+## [1] 0.0238
+## [1] 0.0264</code></pre>
+<p>Error rate changes depending on which observations are selected for the training/testing set</p>
+<ol start="4" style="list-style-type: lower-alpha">
+<li>Now consider a logistic regression model that predicts the probability of default using income, balance, and a dummy variable for student. Estimate the test error using the validation set approach . Comment on whether or not including the test</li>
+</ol>
+<pre class="r"><code>Default$student_var &lt;- ifelse(Default$student == &quot;No&quot;, 0, 1)
+
+seed_vector &lt;- c(1,2,3)
+
+for(i in seed_vector){
+  
+  set.seed(i)
+  train &lt;- sample(10000, 5000)
+  glm_default  &lt;-glm(default ~ balance + income + student_var,
+                   family = &quot;binomial&quot;, 
+                   data = Default,
+                   subset = train) 
+
+# create predictions on the testing set
+
+  test_res &lt;- predict(object = glm_default, 
+        newdata =  Default[-train,], 
+        type = &quot;response&quot;)
+
+  test_res &lt;- ifelse(test_res &gt;= 0.5,&quot;Yes&quot;, &quot;No&quot;)
+  test_correct &lt;- ifelse(test_res == Default$default[-train], TRUE, FALSE)
+  print(1 - sum(test_correct) / length(test_correct))
+  
+  
+  
+}</code></pre>
+<pre><code>## [1] 0.026
+## [1] 0.0246
+## [1] 0.0272</code></pre>
+<p>The average test error has increased from adding student in the model.</p>
 </div>
 
 

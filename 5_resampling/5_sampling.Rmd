@@ -26,7 +26,7 @@ As bootstrapping samples with replacement each probability of *j*th not being in
   
 (1 - 1/n)...(1 - 1/n) = (1 - 1/n)^n^
   
-  d) When *n* = 5, what is the probability that the *j*th observation
+  d) When *n* = 5, what is the probability that the *j*th observation is in the bootstrap sample?
   
 n = 5
 1 - (1 - 1/5)^5^ =  0.67232
@@ -41,7 +41,159 @@ n = 100
 n = 10000
 1 - (1 - 1/10000)^10000 = 0.632139
 
-  g) Create a plot that displays , for each integer value of *n* from 1 to 100,000, the probability that the *j*th observation is in the bootstrap sample. Commrn on what you observe?
+  g) Create a plot that displays , for each integer value of *n* from 1 to 100,000, the probability that the *j*th observation is in the bootstrap sample. Comment on what you observe?
+  
+```{r echo = FALSE}
 
-  h) We will now investigate numerically the probability that a bootstrap sample of size = 100 contains the *j*th observation. Here *j* 
+sampl_j <- function(n){ 1 -(1 - 1/n)^n}
+x <- 1:10000
+y <- sapply(x, sampl_j)
+plot(x,y, type = "l")
+
+```
+
+  The probability that *j*th is sampled reaches towards zero. Becomes asymptote at 0.63
+  
+  h) We will now investigate numerically the probability that a bootstrap sample of size = 100 contains the *j*th observation? Here *j* = 4. Repeatedly create bootstap samples, and each time we record whether or not the fourth observation is contained in the bootstrap sample.
+
+  
+```{r echo = TRUE}
+
+store = rep(NA, 10000)
+for(i in 1:100000){
+  store[i] = sum(sample(1:100, rep = TRUE) == 4) > 0 
+}
+
+mean(store)
+```
+  
+Confirms the previous formula 
+
+3.Reviewing the k-fold cross-validation
+
+  a) Explain how k-fold cross-validation is implemented.
+  
+  Randomly divide the observations into *k* groups. Select one group as the 
+  testing set and the other groups as the training set. Calculate MSE from the 
+  observations in the testing set. Repeat process *k* times, each time using using
+  a different group as the testing set. Average the MSE values from the *k* estimates.
+  
+  b) What are the advantages and disadvantages of using *k*-fold cross-validation.
+  
+  i. The validation set approach 
+  
+  The validation set approach uses a smaller subset of the observations the cross-validation so will likely overestimate the test error and highly variable depending on which observations used in the training set.
+  Less computationally expensive then k-fold.
+  
+  ii. LOOCV
+  
+  LOOCV is more computationally expensive unless fitting a model using linear or 
+  polynomial expression. LOOCV produces models with generally smaller error bias but often with a higher variance error and overall testing error.
+  
+  4. Suppose that we use some statistical learning method to make a prediction for the response *Y* for a particular value of the predictor *X*. Carefully describe the how we might estimate the standard deviation of out prediction?
+  
+   Estimate the standard deviation of the prediction using bootstrap. Create a function that samples data with replacement before using the data to train the statistical learning method then using the trained model to predict a value from Y from X, returning Y. Place the function into a bootstrap and repeat each time with a different subset of data being used to train the model and each time getting return on a prediction of Y from X.  From the distributions of different Y predictions calculate the standard error.
+  
+## Applied Excercises
+
+
+5. 
+  a) Fit a logistic regression model that uses income and balance to predict default 
+  
+  b) Use the validation set approach, estimate the test error of this model.
+  
+  c) Repeat the process three times using three different splits of the obervations into atraining set and a validation set. Comment on the results obtained.
+
+
+```{r echo = TRUE}
+
+library(ISLR)
+library(boot)
+
+data("Default")
+
+
+# create logistic model for default using balance and income using training
+# set
+
+
+seed_vector <- c(1,2,3)
+
+for(i in seed_vector){
+  
+  set.seed(i)
+  train <- sample(10000, 5000)
+  glm_default  <-glm(default ~ balance + income,
+                   family = "binomial", 
+                   data = Default,
+                   subset = train) 
+
+# create predictions on the testing set
+
+  test_res <- predict(object = glm_default, 
+        newdata =  Default[-train,], 
+        type = "response")
+
+  test_res <- ifelse(test_res >= 0.5,"Yes", "No")
+  test_correct <- ifelse(test_res == Default$default[-train], TRUE, FALSE)
+  print(1 - sum(test_correct) / length(test_correct))
+  
+  
+  
+}
+```
+
+Error rate changes depending on which observations are selected for the training/testing set
+
+
+  d) Now consider a logistic regression model that predicts the probability of default using income, balance, and a dummy variable for student. Estimate the test error using the validation set approach . Comment on whether or not including the test 
+  
+```{r echo = TRUE}
+
+Default$student_var <- ifelse(Default$student == "No", 0, 1)
+
+seed_vector <- c(1,2,3)
+
+for(i in seed_vector){
+  
+  set.seed(i)
+  train <- sample(10000, 5000)
+  glm_default  <-glm(default ~ balance + income + student_var,
+                   family = "binomial", 
+                   data = Default,
+                   subset = train) 
+
+# create predictions on the testing set
+
+  test_res <- predict(object = glm_default, 
+        newdata =  Default[-train,], 
+        type = "response")
+
+  test_res <- ifelse(test_res >= 0.5,"Yes", "No")
+  test_correct <- ifelse(test_res == Default$default[-train], TRUE, FALSE)
+  print(1 - sum(test_correct) / length(test_correct))
+  
+  
+  
+}
+  
+
+  
+```
+
+
+The average test error has increased from adding student in the model. 
+
+
+6. We continue to consider the use of a logistic regression model to
+predict the probability of default using income and balance on the
+Default data set. In particular, we will now compute estimates for
+the standard errors of the income and balance logistic regression coefficients
+in two different ways: (1) using the bootstrap, and (2) using
+the standard formula for computing the standard errors in the glm()
+function. Do not forget to set a random seed before beginning your
+analysis.
+
+ 
+
 
